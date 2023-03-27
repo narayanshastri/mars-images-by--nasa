@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA API Project-1</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style></style>
+    <script>
+        function bodyload() {
+            fetch("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY")
+                .then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    for (var item of data.photos) {
+
+                        var tr = document.createElement("tr");
+                        var tdId = document.createElement("td");
+                        var tdPreview = document.createElement("td");
+                        var tdCamera = document.createElement("td");
+                        var tdRover = document.createElement("td");
+
+
+                        tdId.innerHTML = item.id;
+                        tdPreview.innerHTML = `<img id="displayImage" src=${item.img_src} alt="MarsImage" width="100px" height="100px">`;
+                        tdCamera.innerHTML = item.camera.full_name;
+                        tdRover.innerHTML = item.rover.name;
+
+
+
+                        tr.appendChild(tdId);
+                        tr.appendChild(tdPreview);
+                        tr.appendChild(tdCamera);
+                        tr.appendChild(tdRover);
+
+                        document.querySelector("tbody").appendChild(tr);
+                    }
+                })
+        }
+    </script>
+</head>
+
+<body class="container-fluid">
+    <div
+        class="mainDiv d-flex justify-content-center flex-column align-content-center text-center border-1 border-dark ">
+        <button class="btn btn-primary m-3" onclick="bodyload()">Get</button>
+        <h1>Mars Images NASA</h1>
+    </div>
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Photo Id</th>
+                    <th>Preview</th>
+                    <th>Camera Name</th>
+                    <th>Rover Name</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+</body>
+
+</html>
